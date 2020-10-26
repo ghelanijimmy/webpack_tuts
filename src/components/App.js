@@ -14,7 +14,7 @@ const App = () => {
 	const [Element, setElement] = useState();
 	useEffect(() => {
 		if (!Element) {
-			import("./Element").then((el) => {
+			import(/* webpackChunkName: "Element" */ "./Element").then((el) => {
 				console.log(el.default);
 				setElement(el.default);
 			});

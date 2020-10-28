@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const ElementWrapper = styled.div`
@@ -10,7 +10,7 @@ function fetchUser() {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve("loaded");
-    }, 5000);
+    }, 2000);
   });
 }
 
@@ -24,7 +24,6 @@ function wrapPromise(promise) {
   });
   return {
     load() {
-      console.log(status);
       if (status === "pending") {
         throw suspender;
       } else if (status === "error") {
@@ -37,8 +36,29 @@ function wrapPromise(promise) {
 }
 
 const Element = () => {
-  const data = wrapPromise(fetchUser()).load();
-  return <ElementWrapper>{data}</ElementWrapper>;
+  const [dynamicData, setDynamicData] = useState("");
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+    if (data) {
+      import(
+        /* webpackChunkName: "dynamicLogic" */ "../helpers/dynamicLogic"
+      ).then((d) => {
+        setDynamicData(d.default());
+      });
+    }
+  }, [data]);
+
+  const lazyData = wrapPromise(fetchUser()).load();
+  useEffect(() => {
+    if (!data && lazyData) setData(lazyData);
+  }, [data, lazyData]);
+  return (
+    <ElementWrapper>
+      {data}
+      {dynamicData && ` at ${dynamicData}`}
+    </ElementWrapper>
+  );
 };
 
 export default Element;

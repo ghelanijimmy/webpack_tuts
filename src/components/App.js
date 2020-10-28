@@ -10,27 +10,16 @@ const AppWrapper = styled.div`
   color: white;
 `;
 
-const FlexWrapper = styled.div`
-  display: flex;
-  align-items: start;
-  justify-content: space-around;
-`;
-
 const App = () => {
   return (
     <AppWrapper>
       <h1>Hello World</h1>
-      <FlexWrapper>
-        <div>
-          <h2>Suspense</h2>
-          <Suspense fallback={<div>Loading...</div>}>
-            <LazyElement />
-          </Suspense>
-        </div>
-        <div>
-          <h2>Dynamic</h2>
-        </div>
-      </FlexWrapper>
+      <div>
+        <h2>Suspense</h2>
+        <Suspense fallback={<div>Loading...</div>}>
+          <LazyElement />
+        </Suspense>
+      </div>
     </AppWrapper>
   );
 };

@@ -1,33 +1,38 @@
-import React, { useCallback, lazy, Suspense, useState, useEffect } from "react";
+import React, { lazy, Suspense } from "react";
 import styled from "styled-components";
 
-// const Element = lazy(() =>
-// 	import(/* webpackChunkName: "Element" */ "./Element")
-// );
+const LazyElement = lazy(() =>
+  import(/* webpackChunkName: "Element" */ "./Element")
+);
 
 const AppWrapper = styled.div`
-	background-color: #333;
-	color: white;
+  background-color: #333;
+  color: white;
+`;
+
+const FlexWrapper = styled.div`
+  display: flex;
+  align-items: start;
+  justify-content: space-around;
 `;
 
 const App = () => {
-	const [Element, setElement] = useState();
-	useEffect(() => {
-		if (!Element) {
-			import(/* webpackChunkName: "Element" */ "./Element").then((el) => {
-				console.log(el.default);
-				setElement(el.default);
-			});
-		}
-	}, [Element]);
-	return (
-		<AppWrapper>
-			<h1>Hello World</h1>
-			<Suspense fallback={<div>Loading...</div>}></Suspense>
-			{console.log(Element)}
-			{Element && Element}
-		</AppWrapper>
-	);
+  return (
+    <AppWrapper>
+      <h1>Hello World</h1>
+      <FlexWrapper>
+        <div>
+          <h2>Suspense</h2>
+          <Suspense fallback={<div>Loading...</div>}>
+            <LazyElement />
+          </Suspense>
+        </div>
+        <div>
+          <h2>Dynamic</h2>
+        </div>
+      </FlexWrapper>
+    </AppWrapper>
+  );
 };
 
 export default App;

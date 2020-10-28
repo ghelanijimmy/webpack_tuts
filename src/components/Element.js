@@ -10,7 +10,7 @@ function fetchUser() {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve("loaded");
-    }, 1000);
+    }, 5000);
   });
 }
 
@@ -19,12 +19,12 @@ let result;
 
 function wrapPromise(promise) {
   let suspender = promise.then((r) => {
-    console.log(r);
     status = "success";
     result = r;
   });
   return {
     load() {
+      console.log(status);
       if (status === "pending") {
         throw suspender;
       } else if (status === "error") {

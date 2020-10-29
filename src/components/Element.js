@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
+import promiseWrapper from "../helpers/promiseWrapper";
 
 const ElementWrapper = styled.div`
   background-color: blue;
@@ -39,20 +40,28 @@ const Element = () => {
   const [dynamicData, setDynamicData] = useState("");
   const [data, setData] = useState("");
 
+  // const lazyData = promiseWrapper(fetchUser()).load;
+
+  const lazyData = useMemo(() => {
+    return promiseWrapper(fetchUser()).load();
+  }, []);
+
   useEffect(() => {
     if (data) {
-      import(
-        /* webpackChunkName: "dynamicLogic" */ "../helpers/dynamicLogic"
-      ).then((d) => {
-        setDynamicData(d.default());
-      });
+      setTimeout(() => {
+        import(
+          /* webpackChunkName: "dynamicLogic" */ "../helpers/dynamicLogic"
+        ).then((d) => {
+          setDynamicData(d.default());
+        });
+      }, 1000);
     }
   }, [data]);
 
-  const lazyData = wrapPromise(fetchUser()).load();
   useEffect(() => {
     if (!data && lazyData) setData(lazyData);
   }, [data, lazyData]);
+
   return (
     <ElementWrapper>
       {data}

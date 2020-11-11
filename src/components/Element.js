@@ -22,7 +22,7 @@ function fetchData(simulateFalse) {
 }
 
 const Element = () => {
-  const [dynamicData, setDynamicData] = useState("");
+  const [DynamicData, setDynamicData] = useState("");
   const [dataLoaded, setDataLoaded] = useState(false);
 
   const lazyData = useMemo(() => {
@@ -51,7 +51,7 @@ const Element = () => {
     <ElementWrapper>
       <div>{lazyData}</div>
       <img src="https://placehold.it/300x200" alt="placeholder image" />
-      {(dynamicData && <DynamicWrapper>at {dynamicData}</DynamicWrapper>) || (
+      {(DynamicData && <DynamicWrapper>at {DynamicData}</DynamicWrapper>) || (
         <p>Loading</p>
       )}
     </ElementWrapper>

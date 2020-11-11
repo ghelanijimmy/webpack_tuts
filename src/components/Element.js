@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import promiseWrapper from "../helpers/promiseWrapper";
+import Image from "./Image";
 
 const ElementWrapper = styled.div`
   background-color: blue;
@@ -16,7 +17,7 @@ function fetchData(simulateFalse) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (simulateFalse) reject(null);
-      else resolve("loaded");
+      else resolve("loaded lazy component");
     }, 2000);
   });
 }
@@ -50,10 +51,10 @@ const Element = () => {
   return (
     <ElementWrapper>
       <div>{lazyData}</div>
-      <img src="https://placehold.it/300x200" alt="placeholder image" />
-      {(DynamicData && <DynamicWrapper>at {DynamicData}</DynamicWrapper>) || (
-        <p>Loading</p>
-      )}
+      <Image src="https://placehold.it/300x200" />
+      {(DynamicData && (
+        <DynamicWrapper>loaded dynamic import at {DynamicData}</DynamicWrapper>
+      )) || <p>Loading</p>}
     </ElementWrapper>
   );
 };

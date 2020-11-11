@@ -23,34 +23,37 @@ function fetchData(simulateFalse) {
 
 const Element = () => {
   const [dynamicData, setDynamicData] = useState("");
-  const [data, setData] = useState("");
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   const lazyData = useMemo(() => {
     return promiseWrapper(fetchData()).load();
   }, []);
 
   useEffect(() => {
-    if (data) {
+    if (dataLoaded) {
       setTimeout(() => {
         import(
           /* webpackChunkName: "dynamicLogic" */ "../helpers/dynamicLogic"
         ).then((d) => {
-          setDynamicData(d.default());
+          setDynamicData(d.default);
         });
-      }, 1000);
+      }, 2000);
     }
-  }, [data]);
+  }, [dataLoaded]);
 
   useEffect(() => {
-    if (!data && lazyData) {
-      setData(lazyData);
+    if (!dataLoaded && lazyData) {
+      setDataLoaded(true);
     }
-  }, [data, lazyData]);
+  }, [dataLoaded, lazyData]);
 
   return (
     <ElementWrapper>
-      {data}
-      <DynamicWrapper>{dynamicData && ` at ${dynamicData}`}</DynamicWrapper>
+      <div>{lazyData}</div>
+      <img src="https://placehold.it/300x200" alt="placeholder image" />
+      {(dynamicData && <DynamicWrapper>at {dynamicData}</DynamicWrapper>) || (
+        <p>Loading</p>
+      )}
     </ElementWrapper>
   );
 };

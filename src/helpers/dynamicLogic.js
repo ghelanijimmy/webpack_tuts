@@ -1,3 +1,5 @@
-export default function dynamicLogic() {
-  return window.location.href;
+import React from "react";
+
+export default function DynamicLogic() {
+  return <p>{window.location.href}</p>;
 }

@@ -13,7 +13,7 @@ const AppWrapper = styled.div`
 const App = () => {
   return (
     <AppWrapper>
-      <h1>Suspense</h1>
+      <h1>Lazy/Suspense & Dynamic Import</h1>
       <div>
         <Suspense fallback={<div>Loading...</div>}>
           <LazyElement />

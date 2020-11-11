@@ -13,9 +13,8 @@ const AppWrapper = styled.div`
 const App = () => {
   return (
     <AppWrapper>
-      <h1>Hello World</h1>
+      <h1>Suspense</h1>
       <div>
-        <h2>Suspense</h2>
         <Suspense fallback={<div>Loading...</div>}>
           <LazyElement />
         </Suspense>

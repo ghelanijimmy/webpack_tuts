@@ -103,4 +103,10 @@ module.exports = {
     providedExports: process.env.NODE_ENV !== "production",
     minimize: process.env.NODE_ENV === "production",
   },
+  performance:
+    process.env.NODE_ENV === "production"
+      ? false
+      : {
+          hints: "warning",
+        },
 };
